@@ -1,0 +1,294 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta charset="utf-8">
+		
+		<title>Just a Button</title>
+		
+		<script src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js" 
+			id="sap-ui-bootstrap"
+			data-sap-ui-libs="sap.m" 
+			data-sap-ui-theme="sap_bluecrystal"></script>
+			<!-- only load the main library "sap.m" and the Blue Crystal theme -->
+		
+		<script>
+			var aData = {
+  "results" : [ {
+    "sap.app/title" : "App Title",
+    "sap.platform.hcp/appName" : "mydef",
+    "displayName" : "mydef",
+    "sap.app/id" : "com.sap.sampleMyDEF",
+    "sap.app/description" : "App Description",
+    "sap.app/applicationVersion/version" : "1.0.0",
+    "sap.app/type" : "application",
+    "leadingUrl" : "https://mydef-w2f684cf4.dispatcher.int.sap.hana.ondemand.com",
+    "html5AppName" : "mydef",
+    "sap.platform.hcp/appVersion" : "1.0.0",
+    "sap.platform.hcp/providerAccount" : "w2f684cf4",
+    "activeVersion" : "1.0.0",
+    "sap.platform.hcp/uri" : "/",
+    "sap.app/ach" : "ach",
+    "status" : "STARTED"
+  }, {
+    "sap.app/title" : "App Title",
+    "sap.platform.hcp/appName" : "myabc",
+    "displayName" : "myabc",
+    "sap.app/id" : "com.sapmyABC",
+    "sap.app/description" : "App Description",
+    "sap.app/applicationVersion/version" : "1.0.0",
+    "sap.app/type" : "application",
+    "leadingUrl" : "https://myabc-w2f684cf4.dispatcher.int.sap.hana.ondemand.com",
+    "html5AppName" : "myabc",
+    "sap.platform.hcp/appVersion" : "1.0.8",
+    "sap.platform.hcp/providerAccount" : "w2f684cf4",
+    "activeVersion" : "1.0.8",
+    "sap.platform.hcp/uri" : "/",
+    "sap.app/ach" : "ach",
+    "status" : "STARTED"
+  }, {
+    "sap.app/title" : "App Title",
+    "sap.platform.hcp/appName" : "myabc",
+    "displayName" : "myabc",
+    "sap.app/id" : "com.sapmyABC",
+    "sap.app/description" : "App Description",
+    "sap.app/applicationVersion/version" : "1.0.0",
+    "sap.app/type" : "application",
+    "leadingUrl" : "https://myabc-w2f684cf4.dispatcher.int.sap.hana.ondemand.com",
+    "html5AppName" : "myabc",
+    "sap.platform.hcp/appVersion" : "1.0.0",
+    "sap.platform.hcp/providerAccount" : "w2f684cf4",
+    "activeVersion" : "1.0.8",
+    "sap.platform.hcp/uri" : "/",
+    "sap.app/ach" : "ach",
+    "status" : "STARTED"
+  }, {
+    "sap.app/title" : "App Title",
+    "sap.platform.hcp/appName" : "myabc",
+    "displayName" : "myabc",
+    "sap.app/id" : "com.sapmyABC",
+    "sap.app/description" : "App Description",
+    "sap.app/applicationVersion/version" : "1.0.0",
+    "sap.app/type" : "application",
+    "leadingUrl" : "https://myabc-w2f684cf4.dispatcher.int.sap.hana.ondemand.com",
+    "html5AppName" : "myabc",
+    "sap.platform.hcp/appVersion" : "1.0.5",
+    "sap.platform.hcp/providerAccount" : "w2f684cf4",
+    "activeVersion" : "1.0.8",
+    "sap.platform.hcp/uri" : "/",
+    "sap.app/ach" : "ach",
+    "status" : "STARTED"
+  }, {
+    "sap.app/title" : "App Title",
+    "sap.platform.hcp/appName" : "myghi111",
+    "displayName" : "myghi111",
+    "sap.app/id" : "com.sapmyGHI",
+    "sap.app/description" : "App Description",
+    "sap.app/applicationVersion/version" : "1.0.0",
+    "sap.app/type" : "application",
+    "leadingUrl" : "https://myghi111-w2f684cf4.dispatcher.int.sap.hana.ondemand.com",
+    "html5AppName" : "myghi111",
+    "sap.platform.hcp/appVersion" : "1.0.0",
+    "sap.platform.hcp/providerAccount" : "w2f684cf4",
+    "activeVersion" : "1.0.0",
+    "sap.platform.hcp/uri" : "/",
+    "sap.app/ach" : "ach",
+    "status" : "STARTED"
+  }, {
+    "sap.app/title" : "App Title",
+    "sap.platform.hcp/appName" : "myghi455566",
+    "displayName" : "myghi455566",
+    "sap.app/id" : "com.sapmyGHI5",
+    "sap.app/description" : "App Description",
+    "sap.app/applicationVersion/version" : "1.0.0",
+    "sap.app/type" : "application",
+    "leadingUrl" : "https://myghi455566-w2f684cf4.dispatcher.int.sap.hana.ondemand.com",
+    "html5AppName" : "myghi455566",
+    "sap.platform.hcp/appVersion" : "1.0.0",
+    "sap.platform.hcp/providerAccount" : "w2f684cf4",
+    "activeVersion" : "1.0.0",
+   "sap.platform.hcp/uri" : "/",
+    "sap.app/ach" : "ach",
+    "status" : "STARTED"
+  } ]
+};
+			var appArr=aData.results;
+			var removeKeySlash=function(app){
+				var modifiedApp={};
+				for (var property in app) {
+				if (app.hasOwnProperty(property)) {
+					var segments=property.split("/");
+					var keyName=segments[segments.length-1];
+					modifiedApp[keyName]=app[property];
+				}
+			}
+			return modifiedApp;
+			};
+			var modifiedArr=appArr.map(removeKeySlash);
+			//console.log(modifiedArr);
+			
+			var oDialog = new sap.m.TableSelectDialog({
+				multiSelect:true,
+				contentWidth:"500px",
+				contentHeight:"400px",
+				columns : [
+					new sap.m.Column({
+						header : new sap.m.Label({text : "Name"})
+					}),
+					new sap.m.Column({
+						header : new sap.m.Label({text : "Version"})
+					})
+				]
+			});
+			var that=this;
+			var onConfirm=function(evt){ 
+			console.log("confirmed"); 
+			var selectedArr=[];
+			var selectedItems=evt.getParameters().selectedItems;
+			if(!!selectedItems && selectedItems.length>0){
+			var table=selectedItems[0].getTable();
+			var model=table.getModel();
+			for(var i=0;i<selectedItems.length;i++){
+			var item=selectedItems[i];
+			var path=item.getBindingContextPath();
+			var app=model.getProperty(path);
+			selectedArr.push(app);
+			}
+			}
+			that.fireBatchRequest(selectedArr,"ICD");
+			console.log(selectedArr);
+			};
+			oDialog.attachConfirm(onConfirm);
+			oDialog.setModel(new sap.ui.model.json.JSONModel(modifiedArr));
+			oDialog.bindAggregation("items", {
+				path : "/",
+				template : new sap.m.ColumnListItem({
+					type: "Active",
+					cells : [
+						new sap.m.Label({text : "{displayName}"}),
+						new sap.m.Label({text : "{version}"})
+					]
+				}),
+				sorter : [new sap.ui.model.Sorter("displayName", false)					          
+					]	
+			});
+			var searchFunction=function(evt){
+			console.log(evt);
+			var query=evt.getParameters().value;
+			var filters=[];
+			var filter=new sap.ui.model.Filter("displayName",sap.ui.model.FilterOperator.Contains,query);
+			filters.push(filter);
+			var oBinding = evt.getSource().getBinding("items");
+			oBinding.filter(filters);
+			};
+			//oDialog.attachSearch(searchFunction);
+			oDialog.attachLiveChange(searchFunction);
+			
+			var win=window;
+			var btn = new sap.m.Button({
+				text:'Table Select Dialog',
+				press: function(){
+					oDialog.open();
+					oDialog.setBusyIndicatorDelay(0);
+					oDialog.setBusy(true);
+					win.setTimeout(function(){
+					if(oDialog._oBusyIndicator){
+					oDialog._oBusyIndicator.destroy();
+					}
+					oDialog.setBusy(false);
+					},5000);
+				}
+			});
+			btn.placeAt('content');
+			
+			var createFioriArtifact=function(cpTechName,fioriPayload,linkPayload){
+			var deferredResult = $.Deferred();	
+			var urlFiori = "/FioriApps.Apps";
+			var urlLink = "/ContentEntities.ContentPackages('"+cpTechName+"')/$links/Artifacts";
+			var model = new sap.ui.model.odata.v2.ODataModel("odata/1.0/design.svc");
+			var ratingEntity="FioriApps.Apps";
+			var commentEntity="ContentEntities.ContentPackages";
+			/*
+			var changeGroup={};
+			changeGroup[ratingEntity]={
+					groupId: "createFioriArtifact"
+				};
+			changeGroup[commentEntity]={
+				groupId: "createFioriArtifact"
+			};
+			model.setChangeGroups(changeGroup);
+			
+			*/
+			model.setDeferredGroups(["createFioriArtifact"]);
+			model.create(urlFiori, fioriPayload, {
+				parameters: {
+					groupId: "createFioriArtifact"
+				}
+			});
+			model.create(urlLink,linkPayload, {
+				parameters: {
+					groupId: "createFioriArtifact"
+				}
+			});
+			model.attachBatchRequestCompleted(function(data){deferredResult.resolve(data);}).attachBatchRequestFailed(function(data){deferredResult.reject(data);});
+			//model.attachRequestFailed($.proxy(self.onEachRatingsCommentPostFailure, self));
+			model.submitChanges({
+				groupId: "createFioriArtifact"
+			});
+			return deferredResult;
+			};
+
+			
+			var createFioriPayload=function(appTechName,data){
+				return {
+				"TechnicalName" : appTechName,
+				"DisplayName" : data.displayName,
+				"AppName" : data.appName,
+				"Description" : data.description,
+				"Version" : data.appVersion
+				 };
+			};
+
+			var createFioriLink=function(appTechName){
+				var arr=[];
+				var linkPayload={
+				"uri": "ContentEntities.Artifacts(Name='"+appTechName+"',Type='FioriApp')"
+				};
+				arr.push(linkPayload);
+			};
+
+			var createAppTechName=function(CPName,AppName,version){
+				return CPName+"_"+AppName+"_"+version;
+			};
+			
+            this.fireBatchRequest=function(selectedApps,CPName){
+			var deferredArr=[];
+			for(var i=0;i<selectedApps.length;i++){
+			var appData=selectedApps[i];	
+			var appTechName=createAppTechName(CPName,appData.appName,appData.appVersion);
+			var fioriPayload=createFioriPayload(appTechName,appData);
+			var linkPayload=createFioriLink(appTechName);
+			var deferredObj=createFioriArtifact(CPName,fioriPayload,linkPayload);
+			deferredArr.push(deferredObj);
+			}
+			$.when.apply($, deferredArr)
+					.done(function(){console.log("done");})
+					.fail(function(){
+						var errArr=[];
+					for(var i=0;i<arguments.length;i++){ 
+					  errArr.push(arguments[i]);
+					  }
+					  console.log(errArr);
+					});	
+	     	};
+
+
+			
+		</script>
+		
+	</head>
+	<body id="content" class="sapUiBody">
+	</body>
+</html>
+<!-- user:Mihaly Ducz --><!-- description:sap.m.TableSelectDialog with groups -->
+<!-- user:Anamika --><!-- description:Table select dialog item press -->

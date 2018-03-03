@@ -1,0 +1,74 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta http-equiv='Content-Type' content='text/html;charset=UTF-8'/>
+		
+		<title>Mobile App in 23 Seconds Example</title>
+		
+		<script src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js" 
+			id="sap-ui-bootstrap"
+			data-sap-ui-libs="sap.m" 
+			data-sap-ui-theme="sap_bluecrystal"></script>
+			<!-- only load the mobile lib "sap.m" and the Blue Crystal theme -->
+		
+		
+		<script type="text/javascript">
+	// ================================================================================
+
+	var app = new sap.m.App("myApp");
+	//alert((app.isLandscape() ? "Landscape" : "Portrait"));
+
+	var listOverview = new sap.m.Page("listOverview", {
+		title : "Growing List with Scrolling",
+		footer : new sap.m.Bar({
+			contentMiddle : []
+		})
+	});
+
+
+
+	var serviceUrl = "https://cors-anywhere.herokuapp.com/services.odata.org/Northwind/Northwind.svc/";
+
+	var oItemTemplate = new sap.m.StandardListItem({
+		title : "{test>ProductID}",
+		description : "{test>ProductName}",
+		iconInset : false,
+		type : "Detail"
+
+	});
+
+	var oList = new sap.m.List({
+		growing : true,
+		headerText : "Scroll Down to Load",
+		inset : false,
+		growingThreshold : 5,
+		growingTriggerText : "Load More Data",
+		showNoData : false,
+		growingScrollToLoad : false
+	});
+
+
+	function bindListData(url, itemTemplate, list) {
+		jQuery.sap.require("sap.ui.model.odata.ODataModel");
+		// set the data for the model
+		var oModel = new sap.ui.model.odata.ODataModel(url,  {json:true,defaultCountMode:sap.ui.model.odata.CountMode.InlineRepeat});
+		// set the model to the list
+		list.setModel(oModel, "test");
+		// bind Aggregation
+		list.bindAggregation("items", "test>/Products", itemTemplate);
+	}
+
+	bindListData(serviceUrl, oItemTemplate, oList);
+	listOverview.addContent(oList);
+	app.addPage(listOverview)
+
+	app.placeAt("body");
+</script>
+
+</head>
+<body id="body" class="sapUiBody">
+</body>
+</html>
+<!-- user:Sameer --><!-- description:sap.m.List OData growing  -->

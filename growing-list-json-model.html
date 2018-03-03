@@ -1,0 +1,165 @@
+
+ <!DOCTYPE HTML>
+ <html>
+ <head>
+ <meta http-equiv = "X-UA-Compatible" content = "IE=edge"/>
+	 <meta http-equiv = 'Content-Type' content = 'text/html;charset=UTF-8'/>
+
+	 <title > Growing Table JSON AJAX </title>
+
+	 <script src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js"
+	id = "sap-ui-bootstrap" data-sap-ui-libs="sap.m,sap.uxap" data-sap-ui-theme="sap_bluecrystal" >  </script >
+	 <!--only load the mobile lib "sap.m" and the Blue Crystal theme-->
+
+	 <script type = "text/javascript" >
+	// ================================================================================
+
+var serviceUrl="https://cors-anywhere.herokuapp.com/services.odata.org/Northwind/Northwind.svc/Products?$format=json&";
+var countUrl="https://cors-anywhere.herokuapp.com/services.odata.org/Northwind/Northwind.svc/Products/$count";
+var totalCount=0;
+var oTable = new sap.m.Table("tableID", {
+		growing: true,
+		growingScrollToLoad: false,
+		growingThreshold: 5,
+		growingTriggerText:"Show More",
+		mode: "MultiSelect",
+		columns: [
+			new sap.m.Column({
+				header: new sap.m.Label({
+					text: "ProductID"
+				})
+			}),
+			new sap.m.Column({
+				header: new sap.m.Label({
+					text: "ProductName"
+				})
+			}),
+			new sap.m.Column({
+				header: new sap.m.Label({
+					text: "UnitPrice"
+				})
+			})
+
+		]
+	});
+
+var oTemplate = new sap.m.ColumnListItem({
+		cells: [
+			new sap.m.Label({
+				text: "{ProductID}"
+			}),
+			new sap.m.Label({
+				text: "{ProductName}"
+			}),
+			new sap.m.Label({
+				text: "{UnitPrice}"
+			})
+		],
+		type: "Navigation"
+	});
+
+var getProductData = function (url, onSuccess, context) {
+	return $.ajax({
+		type: "GET",
+		url: url,
+		async: false,
+		success: onSuccess.bind(context)
+	});
+};
+var model = new sap.ui.model.json.JSONModel();
+//model.setData(d);
+//oTable.setModel(model, "test");
+oTable.bindAggregation("items", "/results", oTemplate);
+      var section=new sap.uxap.ObjectPageSection({
+						title: "section",
+						subSections: [
+							new sap.uxap.ObjectPageSubSection({
+								title:"subsection",
+								blocks: [oTable]
+							})
+						]
+					});
+				var page = new sap.uxap.ObjectPageLayout({
+				headerTitle: new sap.uxap.ObjectPageHeader({
+					objectTitle: "Object"
+				}),
+				sections: [section]
+			});
+			page.setModel(model);
+var successHandler = function (data) {
+	var growingThreshold = this.getGrowingThreshold();
+	var itemsInTable=0;
+	if(model.getData() && model.getData().results){
+		itemsInTable=Object.keys(model.getData().results).length;	
+		
+	}
+	else{
+		model.getData().results={};
+	}
+	//itemsInTable=Object.keys(this.getModel().getData()).length;
+	var arr=data.value;
+	var colArray=this.getColumns();
+	for(var j=0;j<colArray.length;j++){
+	 colArray[j].setVisible(true);
+	}
+	for (var i = 0; i <arr.length; i++) {
+	    var index=itemsInTable+i;
+		model.setProperty("/results/" + index, arr[i]);
+	}
+	//this._oGrowingDelegate._iLimit=totalCount;
+};
+var getTotalCount=function(data){
+console.log(data);
+totalCount=parseInt(data);
+that=this;
+this._oGrowingDelegate._getListItemInfo= function() {
+                return ("[ " + that._oGrowingDelegate._iRenderedDataItems + " / " + totalCount + " ]");
+            };
+};
+
+var onUpdateStarted = function (event) {
+	var reason = event.getParameter("reason");
+	if (reason === "Growing") {
+		this.setBusy(true);
+		var itemsInTable=0;
+	   // itemsInTable=Object.keys(this.getModel().getData()).length;
+	    itemsInTable=Object.keys(model.getData().results).length;	
+		var url = serviceUrl+"$skip="+itemsInTable+"&$top=5";
+		getProductData(url,successHandler,this);
+		console.log("exiting update started");
+	   // itemsInTable=Object.keys(this.getModel().getData()).length;
+	   itemsInTable=Object.keys(model.getData().results).length;	
+		if(itemsInTable===totalCount){
+		this._oGrowingDelegate._oTrigger.setActive(false);
+		}
+		this.setBusy(false);
+	}
+};
+var onUpdateFinished = function (event) {
+	var reason = event.getParameter("reason");
+	
+	if (reason === "Growing") {
+	console.log(reason);
+	}
+	};
+var onGrowingFinished = function (event) {
+	console.log(event);
+	};	
+oTable.attachEvent("updateStarted",onUpdateStarted.bind(oTable));
+oTable.attachEvent("updateFinished",onUpdateFinished.bind(oTable));
+//oTable.attachEvent("growingFinished",onGrowingFinished.bind(oTable));
+oTable.addEventDelegate({onAfterRendering: function(){ console.log("rendering called for the table")}});
+var url = serviceUrl+"$skip=0&$top=6";
+getProductData(countUrl,getTotalCount,oTable);
+getProductData(url,successHandler,oTable);
+	    
+			page.placeAt('body');	 
+//oTable.placeAt("body");
+
+ </script>
+
+ </head>
+ <body id = "body" class = "sapUiBody" >
+	 </body>
+	 </html>
+	 
