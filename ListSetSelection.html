@@ -1,0 +1,70 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta http-equiv='Content-Type' content='text/html;charset=UTF-8'/>
+		
+		<title>One item in a list</title>
+		
+		<script src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js"
+			id="sap-ui-bootstrap"
+			data-sap-ui-libs="sap.m" 
+			data-sap-ui-theme="sap_belize"></script>
+			<!-- only load the mobile lib "sap.m" and the Blue Crystal theme -->
+		
+		<script type="text/javascript">
+        var data=[{
+			"subtagname": "SAP HANA Cloud Integration"
+		}, {
+			"subtagname": "SAP Process Orchestration"
+		}, {
+			"subtagname": "SAP Process Integration"
+		}, {
+			"subtagname": "SAP NetWeaver PI"
+		}, {
+			"subtagname": "SAP NetWeaver Process Integration"
+		}
+	   ];  
+		var model = new sap.ui.model.json.JSONModel();	
+		model.setData(data);
+		var pressListener=function(evt){ 
+		console.log(evt);
+		};	
+		var template=new sap.m.StandardListItem({
+						title : "{subtagname}",
+			            type : sap.m.ListType.Active
+			            
+			        
+				});	
+			
+		var oList = new sap.m.List({
+			headerText : "Category",
+			mode : "MultiSelect"
+		});
+		
+		
+		oList.setModel(model);
+        template.attachPress(pressListener);	
+	    oList.bindItems("/",template);
+       var binding=oList.getBinding("items"); 
+	   oList.placeAt("body");
+	   
+	   
+	   let currentSelectedIndex = 1;
+	   setInterval(()=>{
+	    oList.removeSelections(true);
+		const products = oList.getItems();
+		const totalProducts = products.length;
+		currentSelectedIndex = currentSelectedIndex % totalProducts;
+		const selectedProduct = products[currentSelectedIndex];
+		oList.setSelectedItem(selectedProduct);
+		++currentSelectedIndex;
+	   },3000);
+		</script>
+
+</head>
+<body id="body" class="sapUiBody">
+</body>
+</html>
+<!-- user:diana.mihaylova@sap.com --><!-- description:One item in a sap.m.List -->

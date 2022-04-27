@@ -1,0 +1,178 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta charset="utf-8">
+		
+		<title>Just a Button</title>
+		
+		<script src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js" 
+			id="sap-ui-bootstrap"
+			data-sap-ui-libs="sap.m, sap.uxap" 
+			data-sap-ui-theme="sap_bluecrystal"></script>
+			<!-- only load the main library "sap.m" and the Blue Crystal theme -->
+		
+		<script>
+		var that=this;
+		var errorTable = new sap.m.Table({
+		type : sap.m.ListType.Navigation,
+		inset : false,
+		fixedLayout : false,
+		backgroundDesign : sap.m.BackgroundDesign.Transparent,
+		showSeparators : "Inner",
+		columns : [ new sap.m.Column({
+		    width:"25rem",
+			styleClass : "name",
+			hAlign : "Left",
+			vAlign : "Top"
+		}) ]
+	});
+	    var flexBox=new sap.m.FlexBox({"width":"100%","direction":sap.m.FlexDirection.Row,
+		"alignItems":sap.m.FlexAlignItems.Center,
+		"justifyContent":sap.m.FlexJustifyContent.Center});
+		var statusFlexBox=new sap.m.FlexBox({"width":"100%","direction":sap.m.FlexDirection.Row,
+		"alignItems":sap.m.FlexAlignItems.Center,
+		"justifyContent":sap.m.FlexJustifyContent.Center});
+		var textFlexBox=new sap.m.FlexBox({"width":"100%","direction":sap.m.FlexDirection.Row,
+		"alignItems":sap.m.FlexAlignItems.Center,
+		"justifyContent":sap.m.FlexJustifyContent.Center});
+		var oStatus=new sap.m.ObjectStatus({
+		                    text:"Error" , 
+							icon : "{icon}",
+							state : "{state}"
+							});
+		var text=new sap.m.Text({
+							maxLines : 5,
+							text : "{name}"});
+		statusFlexBox.addItem(oStatus);
+		textFlexBox.addItem(text);
+		flexBox.addItem(statusFlexBox);
+		flexBox.addItem(textFlexBox);
+	
+	var errorTableTemplate = new sap.m.ColumnListItem(
+			{
+				unread : false,
+				vAlign : "Top",
+				type : "Navigation",
+				press : function(evt) {
+					var path = evt.oSource.getBindingContextPath();
+					var model = evt.getSource().getModel();
+                    console.log(path); 
+	            if (path) {
+						var length = that.detailErrorTable.getModel()
+								.getData().errorMessageContentList.length;
+						var contentHeight = 8.5;
+						if (length < 4) {
+							contentHeight = contentHeight + (length * 4);
+						} else {
+							contentHeight = contentHeight + (4 * 4);
+						}
+
+						that.errorDialog.setContentHeight(contentHeight
+								+ "rem");
+						var data = model.getProperty(path);
+						if (data.state === "Error") {
+							that.errorMessagesNavigationContainer.to("detailErrorPage");
+							//that.errorMessagesNavigationContainer.to(that.detailErrorPage);
+						}
+					}					
+				},
+				cells : [flexBox]
+			});		
+	
+	this.detailErrorTable = new sap.m.Table({
+		growing : true,
+		showSeparators : sap.m.ListSeparators.Inner,
+		inset : false,
+		fixedLayout : false,
+		backgroundDesign : sap.m.BackgroundDesign.Transparent,
+		columns : [ new sap.m.Column({
+			header : new sap.m.Text({
+				text : "Type"
+			})
+		}), new sap.m.Column({
+			header : new sap.m.Text({
+				text : "Name"
+			})
+		}) ]
+	});
+	
+	var errorTemplate = new sap.m.ColumnListItem({
+		unread : false,
+		vAlign : "Top",
+		cells : [ new sap.m.Text({
+				maxLines : 3,
+				text : "{Type}"
+			}), new sap.m.Text({
+				maxLines : 3,
+				text : "{Title}"
+			}) ]
+	});
+
+	
+	var mainErrorPage = new sap.m.Page("mainErrorPage",{
+		title : "Messages",
+		content : [errorTable]
+	}).addStyleClass("errorMsgTable");
+	
+	this.detailErrorPage = new sap.m.Page("detailErrorPage",{
+		showNavButton : true,
+		navButtonPress : function() {
+			that.errorDialog.setContentHeight("8.5rem");
+			that.errorMessagesNavigationContainer.back();
+		},
+		content : [ this.detailErrorTable ]
+	}).addStyleClass("errorMsgTable");
+	
+	this.errorMessagesNavigationContainer = new sap.m.NavContainer({
+		pages : [ mainErrorPage, this.detailErrorPage ]
+	});
+	
+	this.errorDialog = new sap.m.Dialog({
+		content : [ this.errorMessagesNavigationContainer ],
+		showHeader : false,
+		contentWidth : "30rem",
+		contentHeight:"8.5rem"
+	}).addStyleClass("sapUiSizeCompact");
+	
+	var navigation = [ {
+			name : "Internal server error",
+			icon : "sap-icon://error",
+			state : sap.ui.core.ValueState.Error
+		} ];
+		
+	var mainErrorModel = new sap.ui.model.json.JSONModel();
+		mainErrorModel.setData({
+			navigation : navigation
+		});
+	errorTable.setModel(mainErrorModel);
+	errorTable.bindAggregation("items", "/navigation",errorTableTemplate);
+	
+	this.detailErrorPage.setTitle("Messages (3)");
+	var message=[{"Type":"500","Title":"Forbidden"},{"Type":"500","Title":"Forbidden"},{"Type":"500","Title":"Forbidden"}];
+	var detailsErrorModel = new sap.ui.model.json.JSONModel();
+	detailsErrorModel.setData({
+		errorMessageContentList : message
+	});
+	this.detailErrorTable.setModel(detailsErrorModel);
+	this.detailErrorTable.bindAggregation("items","/errorMessageContentList",errorTemplate);
+	//errorDialog.open();
+	
+		   var oBtn = new sap.m.Button({
+				text: 'click me',
+				press: function() {
+					that.errorDialog.open();
+				}
+			
+			});
+		  var app = new sap.m.App("tableApp", {initialPage:"mainErrorPage"});
+	//	this.errorMessagesNavigationContainer.placeAt('content');
+	  oBtn.placeAt('content');
+		
+
+		</script>
+		
+	</head>
+	<body id="content" class="sapUiBody">
+	</body>
+</html>

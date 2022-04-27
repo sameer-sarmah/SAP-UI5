@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+	<title>SAPUI5 Walkthrough</title>
+	<script
+		id="sap-ui-bootstrap"
+		src="https://sapui5.hana.ondemand.com/1.36.8/resources/sap-ui-core.js"
+		data-sap-ui-theme="sap_bluecrystal"
+		data-sap-ui-libs="sap.m,sap.uxap,sap.ui.layout"
+		data-sap-ui-compatVersion="edge"
+		data-sap-ui-preload="async"
+		data-sap-ui-resourceroots='{
+			"sap.ui.demo": "./"
+		}'>
+	</script>
+	<script>
+		sap.ui.getCore().attachInit(function () {
+			
+			// new sap.m.Shell({
+			// 	id:"product-shell",
+			// 	app: new sap.ui.core.ComponentContainer({
+			// 		name: "sap.ui.demo"
+			// 	})
+			// }).placeAt("content");
+
+			const oData = {
+				recipient : {
+					name : "World"
+				}
+			};
+			const oModel = new sap.ui.model.json.JSONModel(oData);
+
+			const componentContainer = new sap.ui.core.ComponentContainer({
+					name: "sap.ui.demo"
+			});
+			componentContainer.placeAt("content");
+
+			// const appView = sap.ui.view({id:"myView",viewName:"sap.ui.demo.view.App",type:sap.ui.core.mvc.ViewType.XML});
+
+			// appView.setModel(oModel);
+			// appView.placeAt("content");
+		});
+	</script>
+</head>
+<body class="sapUiBody" id="content">
+</body>
+</html>

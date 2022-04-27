@@ -1,0 +1,20 @@
+<mvc:View controllerName="sap.ui.demo.controller.ProductDetails"
+	xmlns:l="sap.ui.layout"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m"
+	id = "productDetailsView">
+
+	<App id="productDetailsApp">
+		<pages>
+			<Page id="productDetailsPage"   navButtonPress="onNavBack" showNavButton="true" >
+				<content>
+					<Panel id="productDetailsPanel" class="sapUiResponsiveMargin" width="auto">
+						<content>
+
+						</content>
+					</Panel>
+				</content>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>

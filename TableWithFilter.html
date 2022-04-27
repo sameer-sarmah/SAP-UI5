@@ -1,0 +1,114 @@
+
+ <!DOCTYPE HTML>
+ <html>
+ <head>
+ <meta http-equiv = "X-UA-Compatible" content = "IE=edge"/>
+	 <meta http-equiv = 'Content-Type' content = 'text/html;charset=UTF-8'/>
+
+	 <title > sap m table </title>
+
+	 <script src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js"
+	id = "sap-ui-bootstrap" data-sap-ui-libs="sap.m,sap.uxap" data-sap-ui-theme="sap_bluecrystal" > 
+	</script>
+
+	 <script type = "text/javascript">
+const searchBox = new sap.m.Input({width : "100%"});
+const oTable = new sap.m.Table("tableID", {
+		columns: [
+			new sap.m.Column({
+				header: new sap.m.Label({
+					text: "ProductID"
+				})
+			}),
+			new sap.m.Column({
+				header: new sap.m.Label({
+					text: "ProductName"
+				})
+			}),
+			new sap.m.Column({
+				header: new sap.m.Label({
+					text: "UnitPrice"
+				})
+			})
+
+		],
+        width : "80%"
+	});
+
+    const oTemplate = new sap.m.ColumnListItem({
+		cells: [
+			new sap.m.Label({
+				text: "{test>ProductID}"
+			}),
+			new sap.m.Label({
+				text: "{test>ProductName}"
+			}),
+			new sap.m.Label({
+				text: "{test>UnitPrice}"
+			})
+		],
+		type: "Navigation"
+	});
+const products = [
+    {
+      "ProductID": 1,
+      "ProductName": "Chai",
+      "UnitPrice": "18.0000"
+    },
+    {
+      "ProductID": 2,
+      "ProductName": "Chang",
+      "UnitPrice": "19.0000"
+    },
+    {
+      "ProductID": 3,
+      "ProductName": "Aniseed Syrup",
+      "UnitPrice": "10.0000"
+    },
+    {
+      "ProductID": 4,
+      "ProductName": "Chef Anton's Cajun Seasoning",
+      "UnitPrice": "22.0000"
+    },
+    {
+      "ProductID": 5,
+      "ProductName": "Chef Anton's Gumbo Mix",
+      "UnitPrice": "21.3500"
+    }
+  ];
+const model = new sap.ui.model.json.JSONModel();
+model.setData(products);
+oTable.setModel(model, "test");
+oTable.bindAggregation("items", "test>/", oTemplate);
+
+const onSearch = (event) => { 
+        const filters = [];
+        const filter = new sap.ui.model.Filter("ProductName",
+                sap.ui.model.FilterOperator.Contains, event.getParameters().value);
+        filters.push(filter);
+        const binding = oTable.getBinding("items");
+        binding.filter(filters);
+};
+searchBox.attachLiveChange(onSearch);
+oTable.addEventDelegate({
+    onAfterRendering: function(){ 
+        console.log("rendering called for the table");
+
+
+}});	 
+
+
+const parentFlexBox = new sap.m.FlexBox({"width":"100%","direction":sap.m.FlexDirection.Column,
+		"alignItems":sap.m.FlexAlignItems.Center,
+		"justifyContent":sap.m.FlexJustifyContent.Center}); 	
+        parentFlexBox.addItem(searchBox);
+		parentFlexBox.addItem(oTable);
+		parentFlexBox.placeAt("body");
+
+ </script>
+
+ </head>
+ <body id = "body" class = "sapUiBody" ></body>
+	 
+</html>
+	 

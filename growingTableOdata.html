@@ -1,0 +1,135 @@
+
+ <!DOCTYPE HTML>
+ <html>
+ <head>
+ <meta http-equiv = "X-UA-Compatible" content = "IE=edge"/>
+	 <meta http-equiv = 'Content-Type' content = 'text/html;charset=UTF-8'/>
+
+	 <title > Mobile App in 23 Seconds Example </title>
+
+	 <script src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js"
+	id = "sap-ui-bootstrap" data-sap-ui-libs="sap.m" data-sap-ui-theme="sap_bluecrystal" >  </script >
+	 <!--only load the mobile lib "sap.m" and the Blue Crystal theme-->
+
+	 <script type = "text/javascript" >
+	// ================================================================================
+
+
+	//visit http://cors-anywhere.herokuapp.com/corsdemo and click "Request temporary access to the demo server"
+var serviceUrl="https://services.odata.org/V3/Northwind/Northwind.svc/";
+
+var oTable = new sap.m.Table("tableID", {
+		growing: true,
+		growingScrollToLoad: false,
+		growingThreshold: 5,
+		mode: "MultiSelect",
+		columns: [
+			new sap.m.Column({
+				header: new sap.m.Label({
+					text: "ProductID"
+				})
+			}),
+			new sap.m.Column({
+				header: new sap.m.Label({
+					text: "ProductName"
+				})
+			}),
+			new sap.m.Column({
+				header: new sap.m.Label({
+					text: "UnitPrice"
+				})
+			})
+
+		]
+	});
+
+var oTemplate = new sap.m.ColumnListItem({
+		cells: [
+			new sap.m.Label({
+				text: "{test>ProductID}"
+			}),
+			new sap.m.Label({
+				text: "{test>ProductName}"
+			}),
+			new sap.m.Label({
+				text: "{test>UnitPrice}"
+			})
+		],
+		type: "Navigation",
+		press: function (oEvent) {
+			alert(oEvent.getSource().getBindingContext() + ', I will refresh model now');
+			oModel.refresh();
+
+		}
+	});
+
+function bindListData(url, itemTemplate, table) {
+	jQuery.sap.require("sap.ui.model.odata.ODataModel");
+	// set the data for the model
+	var oModel = new sap.ui.model.odata.ODataModel(url, true, "anzeiger", "display");
+	// set the model to the list
+	table.setModel(oModel, "test");
+	// bind Aggregation
+	table.bindAggregation("items", "test>/Products", itemTemplate);
+	/*
+	for (var b = 0; b < oModel.aBindings.length; b++) {
+	var bin = oModel.aBindings[b];
+	if (bin instanceof sap.ui.model.odata.ODataListBinding) {
+		listBinding = bin;
+		console.log(bin);
+	}
+    }
+	*/
+const onDataReceived = (evt) => {
+       var arr = [];
+		var growingThreshold = 5;
+		if (evt && evt.oSource && evt.oSource.oModel && evt.oSource.oModel.oData) {
+			var data = evt.oSource.oModel.oData;
+			let products = [];
+			for (let product in data) {
+				products.push(data[product]);
+			}
+			evt.oSource.oModel.updateBindings();
+		}
+	console.log('DataReceived');
+	console.log(evt);
+	
+};	
+
+
+oModel.attachEvent("dataReceived", onDataReceived);
+	oModel.attachEvent("requestCompleted", function (evt) {
+		console.log("requestCompleted");
+		console.log(evt);
+	});
+	console.log(oModel.oData);
+}
+
+bindListData(serviceUrl, oTemplate, oTable);
+
+
+oTable.placeAt("body");
+	/*
+Call hierarchy	
+	
+ODataModel.prototype._request
+
+ODataModel.prototype._loadData
+
+ODataListBinding.prototype.loadData
+
+GrowingEnablement.updateItems
+GrowingEnablement.requestNewPage
+
+EventProvider.prototype.fireEvent iterates through the press listener and invokes the listener with the event object
+in case of a Table binded to an odata model which supports grow feature by a button that listener is GrowingEnablement.requestNewPage
+	
+	*/
+ </script>
+
+ </head>
+ <body id = "body" class = "sapUiBody" >
+	 </body>
+	 </html>
+	 <!--user: Sameer-->  <!--description: sap.m.List OData growing-->
+	<!--user: Sameer-->  <!--description: sap.m.List growing requestCompleted-->

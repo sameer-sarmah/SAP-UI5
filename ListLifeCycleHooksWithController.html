@@ -1,0 +1,92 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta http-equiv='Content-Type' content='text/html;charset=UTF-8'/>
+		
+		<title>One item in a list</title>
+		
+		<script src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js"
+			id="sap-ui-bootstrap"
+			data-sap-ui-libs="sap.m" 
+			data-sap-ui-theme="sap_belize"></script>
+			<!-- only load the mobile lib "sap.m" and the Blue Crystal theme -->
+				<script id="view1" type="sapui5/xmlview">
+		<mvc:View 
+			xmlns:mvc="sap.ui.core.mvc" 
+			xmlns:core="sap.ui.core" 
+			xmlns="sap.m" 
+			controllerName="example.list.controller">
+				<Panel id="panel"/>
+			</mvc:View>
+		</script>
+		<script type="text/javascript">
+        var data=[{
+			"subtagname": "SAP HANA Cloud Integration"
+		}, {
+			"subtagname": "SAP Process Orchestration"
+		}, {
+			"subtagname": "SAP Process Integration"
+		}, {
+			"subtagname": "SAP NetWeaver PI"
+		}, {
+			"subtagname": "SAP NetWeaver Process Integration"
+		}
+	   ];  
+		var model = new sap.ui.model.json.JSONModel([]);	
+		var pressListener=function(evt){ 
+		console.log(evt);
+		};	
+		var template=new sap.m.StandardListItem({
+						title : "{subtagname}",
+			            type : sap.m.ListType.Active    
+		});	
+			
+		var oList = new sap.m.List({
+			headerText : "Category",
+			mode : "MultiSelect"
+		});
+		
+		
+		//oList.setModel(model);
+        template.attachPress(pressListener);	
+	    oList.bindItems("/",template);
+       var binding=oList.getBinding("items"); 
+	   let currentIndex = 0;
+	   sap.ui.controller( "example.list.controller", {
+				onInit:function(){
+				this.getView().setModel(model);
+				const panel = this.getView().byId("panel");
+				panel.addContent(oList);
+				setInterval(()=>{
+					const viewModel = this.getView().getModel();
+					const products = viewModel.getData();
+					if(products.length < data.length){
+						const product = data[currentIndex];
+						viewModel.setProperty(`/${currentIndex}`,product);
+						console.log(`added ${JSON.stringify(product)} at index ${currentIndex}`);
+						++currentIndex;
+					}		
+			   },3000);
+				
+				},
+				onAfterRendering : function(event){
+				 console.log("onAfterRendering");
+				},
+				onBeforeRendering : function(event){
+				 console.log("onBeforeRendering");
+				}
+	   });
+	   			var myView = sap.ui.xmlview( {
+				viewContent : jQuery( '#view1' ).html()
+			}
+									   );
+			myView.placeAt( 'body' );
+		</script>
+
+</head>
+<body id="body" class="sapUiBody">
+</body>
+</html>
+<!-- user:diana.mihaylova@sap.com --><!-- description:One item in a sap.m.List -->

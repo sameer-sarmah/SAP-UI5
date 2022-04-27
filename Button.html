@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html><head>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge' />
+    <title>test</title>
+
+ 		<script src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js" 
+			id="sap-ui-bootstrap"
+			data-sap-ui-libs="sap.m" 
+			data-sap-ui-theme="sap_belize"></script>
+        <!-- add 'sap.ui.table' and/or other libraries if required -->
+
+<script>
+	var data = { "name" : "hello"};
+    var model = new sap.ui.model.json.JSONModel();	
+	model.setData(data);
+	var button = new sap.m.Button({text:"{/name}"});
+	const handleItemPress = (evt) => {
+			console.log("The item was pressed");
+		};
+	button.setModel(model);
+	button.attachPress(handleItemPress);
+    button.placeAt('content');
+
+</script>
+
+</head>
+<body class='sapUiBody'>
+    <div id='content'></div>
+</body>
+</html>

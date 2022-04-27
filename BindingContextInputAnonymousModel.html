@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta charset="utf-8">
+		<title>Typeahead Issue
+		</title>
+		<script
+				src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js" 
+				data-sap-ui-bindingSyntax="complex"
+				id="sap-ui-bootstrap" data-sap-ui-libs="sap.m"
+				
+				data-sap-ui-theme="sap_belize">
+		</script>
+		<!-- only load the main library "sap.m" and the Belize theme -->
+		<script id="view1" type="sapui5/xmlview">
+		<mvc:View 
+			xmlns:mvc="sap.ui.core.mvc" 
+			xmlns:core="sap.ui.core" 
+			xmlns="sap.m" 
+			controllerName="in.sijas.Integer.controller">
+				<Input id="intInput" type="Number" value="{path:'/value'}"/>
+				<Text id="numberText" text="{/value}"/>
+			</mvc:View>
+		</script>
+		<script>
+			sap.ui.controller( "in.sijas.Integer.controller", {
+				onInit:function(){
+					var json = {
+						value:"10.00"
+					};
+					var model = new sap.ui.model.json.JSONModel(json);
+					var context = new sap.ui.model.Context(model,"/");
+					this.getView().setModel(model);
+					this.getView().setBindingContext(context);
+				},
+				onAfterRendering : function(event){
+				 console.log("onAfterRendering");
+				 const intInput = this.getView().byId("intInput");
+				 console.log(intInput.getBindingContext());
+				 const numberText = this.getView().byId("numberText");
+				 console.log(numberText.getBindingContext());
+				}
+			});
+			var myView = sap.ui.xmlview( {
+				viewContent : jQuery( '#view1' ).html()
+			}
+									   );
+			myView.placeAt( 'content' );
+		</script>
+	</head>
+	<body id="content" class="sapUiBody">
+	</body>
+</html>

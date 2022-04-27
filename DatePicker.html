@@ -1,0 +1,40 @@
+
+ <!DOCTYPE HTML>
+ <html>
+ <head>
+ <meta http-equiv = "X-UA-Compatible" content = "IE=edge"/>
+	 <meta http-equiv = 'Content-Type' content = 'text/html;charset=UTF-8'/>
+
+	 <title > sap ui menu </title>
+
+	 <script src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js"
+	id = "sap-ui-bootstrap" data-sap-ui-libs="sap.m,sap.uxap,sap.ui.table,sap.ui.core,sap.ui.commons" data-sap-ui-theme="sap_bluecrystal" > 
+	</script>
+
+	 <script type = "text/javascript">
+		const handleItemPress = (evt) => {
+			console.log(evt.getParameters().value);			
+		};
+		const maxDate = new Date();
+		maxDate.setMonth(maxDate.getMonth()+1);
+		const currentDate = new Date();
+		const minDate = new Date();
+		minDate.setMonth(minDate.getMonth() - 1);
+
+		const datePicker = new sap.m.DatePicker({
+			placeholder:"Enter Date"
+		});
+		datePicker.setMaxDate(maxDate);
+		datePicker.setMinDate(minDate);
+		datePicker.setValue(currentDate);
+		datePicker.attachChange(handleItemPress);
+		datePicker.placeAt('body');
+
+
+ </script>
+
+ </head>
+ <body id = "body" class = "sapUiBody" ></body>
+	 
+</html>
+	 

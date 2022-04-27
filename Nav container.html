@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta charset="utf-8">
+		
+		<title>ObjectPageLayout &amp; NavContainer</title>
+		
+		<script src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js" 
+			id="sap-ui-bootstrap"
+			data-sap-ui-libs="sap.m,sap.uxap" 
+			data-sap-ui-theme="sap_belize"></script>
+		
+		<script>
+			var navContainer = new sap.m.NavContainer({
+				pages: [
+					new sap.m.Panel('page1',{
+						//title: "Page1",
+						content: [
+							new sap.m.Button({ text: 'To Page 2', press: function() {
+								console.log('to page 2');
+								navContainer.to('page2');
+							}})
+							
+						]
+					}),
+					new sap.m.Panel('page2', {
+						title: "Page2",
+						content: [
+							new sap.m.Button({ text: 'To Page 1' , press: function() {
+								console.log('to page 1');
+								navContainer.to('page1');
+							}})
+						]
+					})
+				]
+			})
+			
+			
+			var obj = new sap.uxap.ObjectPageLayout({
+				headerTitle: new sap.uxap.ObjectPageHeader({
+					objectTitle: "Object"
+				}),
+				sections: [
+					new sap.uxap.ObjectPageSection({
+						title: "section",
+						subSections: [
+							new sap.uxap.ObjectPageSubSection({
+								title:"subsection",
+								blocks: navContainer
+							})
+						]
+					})
+				]
+			});
+
+			obj.placeAt('content');
+		</script>
+		
+	</head>
+	<body id="content" class="sapUiBody">
+	</body>
+</html>
+<!-- user:Petyo Kostakov --><!-- description:ObjectPage with NavContainer -->

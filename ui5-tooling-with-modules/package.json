@@ -1,0 +1,21 @@
+{
+	"name": "ui5-table",
+	"version": "1.0.0",
+	"description": "UI5 project generated with UI5 tooling",
+	"author": "",
+	"license": "ISC",
+	"devDependencies": {
+		"@ui5/cli": "^2.14.8",
+		"eslint": "^7.32.0",
+		"local-web-server": "^4.2.1",
+		"rimraf": "^3.0.2"
+	},
+	"scripts": {
+		"start": "ui5 serve",
+		"lint": "eslint webapp",
+		"build": "ui5 build -a --clean-dest",
+		"build-self-contained": "ui5 build self-contained -a --clean-dest",
+		"serve-dist": "ws --compress -d dist"
+	},
+	"dependencies": {}
+}

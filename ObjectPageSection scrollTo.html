@@ -1,0 +1,81 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta charset="utf-8">
+		
+		<title>Just a Button</title>
+		
+		<script src="https://sapui5.hana.ondemand.com/1.44.8/resources/sap-ui-core.js" 
+			id="sap-ui-bootstrap"
+			data-sap-ui-libs="sap.m, sap.uxap,sap.ui.commons" 
+			data-sap-ui-theme="sap_bluecrystal"></script>
+			<!-- only load the main library "sap.m" and the Blue Crystal theme -->
+		
+		<script>
+			
+			var onPressTrigger = function(evt){
+			
+			var viewSid = "";
+			if(	evt.getSource().getText() === "Click to Section 2"){
+			viewSid = "id_section2";
+			}
+			else{
+			viewSid = "id_section1";
+			}
+			//var viewId = sap.ui.getCore().byId("ObjectPageLayout").getSections()[1].getSubSections()[0].getParent().getId();
+			sap.ui.getCore().byId("ObjectPageLayout").setSelectedSection(viewSid);
+			
+			};
+			
+			var section1=new sap.uxap.ObjectPageSection({
+						title: "section1",
+						id : "id_section1",
+						subSections: [
+							new sap.uxap.ObjectPageSubSection({
+								blocks: [
+									new sap.m.Button({ text: 'Click to Section 1'  })					
+								]
+							})
+						]
+					});
+			var section2=	new sap.uxap.ObjectPageSection({
+						title: "section 2",
+						id : "id_section2"
+					});
+			var subSection=new sap.uxap.ObjectPageSubSection();
+			var layout=sap.ui.commons.layout.VerticalLayout();
+			subSection.addBlock(layout);
+			section2.addSubSection(subSection);
+			//layout.addContent(new sap.m.Button({ text: 'Click to Section 2'  }));
+			var Opl = new sap.uxap.ObjectPageLayout({
+				id:"ObjectPageLayout",
+				useIconTabBar:true,
+				headerTitle: new sap.uxap.ObjectPageHeader({
+					objectTitle: "Object"
+				}),
+				sections: [section1,section2]
+			});
+			//Opl.setSelectedSection(section2.getId());
+			
+			//Opl.scrollToSection(section2.getId());
+			//Opl.setAssociation("selectedSection", section2.getId(), true);
+			Opl.placeAt('content');
+			
+		    var f=function(){
+			  this.scrollToSection(section2.getId());
+			  this.setAssociation("selectedSection", section2.getId(), true);
+			  layout.addContent(new sap.m.Button({ text: 'Click to Section 2'  }));
+			  };
+			 var fRef= $.proxy(f, Opl);
+			Opl.addEventDelegate({
+		      onAfterRendering : fRef
+	});
+		</script>
+		
+	</head>
+	<body id="content" class="sapUiBody">
+	</body>
+</html>
+<!-- user:Jens Henniger --><!-- description:Object Page with two Subsections -->
+<!-- user:Sameer --><!-- description:ObjectPageSection press event -->

@@ -1,0 +1,18 @@
+<mvc:View controllerName="sap.ui.demo.controller.Product"
+	xmlns:l="sap.ui.layout"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m" id="productView">
+	<App id="productApp">
+		<pages>
+			<Page id="productPage">
+				<content>
+					<Panel id="productPanel" class="sapUiResponsiveMargin" width="auto">
+						<content>
+
+						</content>
+					</Panel>
+				</content>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>

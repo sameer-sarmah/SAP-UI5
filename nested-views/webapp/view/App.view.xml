@@ -1,0 +1,19 @@
+<mvc:View
+	controllerName="sap.ui.demo.controller.App"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+	displayBlock="true">
+	<App class="myAppDemoWT">
+		<pages>
+			<Page title="{i18n>homePageTitle}">
+				<content>
+					 <mvc:XMLView viewName="sap.ui.demo.view.HelloPanel"/> 
+					 <mvc:XMLView viewName="sap.ui.demo.view.Product"/> 
+					<Text
+				text="Hello {/recipient/name}"
+				class="sapUiSmallMargin sapThemeHighlight-asColor myCustomText"/>
+				</content>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>

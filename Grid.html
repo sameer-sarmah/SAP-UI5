@@ -1,0 +1,72 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta http-equiv='Content-Type' content='text/html;charset=UTF-8'/>
+		
+		<title>One item in a list</title>
+		
+		<script src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js" 
+			id="sap-ui-bootstrap"
+			data-sap-ui-libs="sap.m" 
+			data-sap-ui-theme="sap_belize"></script>
+			<!-- only load the mobile lib "sap.m" and the Blue Crystal theme -->
+		
+		<script type="text/javascript">
+        var data=[{
+			"subtagname": "SAP HANA Cloud Integration"
+		}, {
+			"subtagname": "SAP Process Orchestration"
+		}, {
+			"subtagname": "SAP Process Integration"
+		}, {
+			"subtagname": "SAP NetWeaver PI"
+		}, {
+			"subtagname": "SAP NetWeaver Process Integration"
+		}
+	   ];  
+		var model = new sap.ui.model.json.JSONModel();	
+		model.setData(data);
+		var template=new sap.m.StandardListItem({
+						title : "{subtagname}",
+			        
+				});	
+		var oList = new sap.m.List({
+			headerText : "Category",
+			mode : "MultiSelect"
+			
+		});
+		oList.setModel(model);
+        oList.bindItems("/",template);
+		var oStatus = new sap.m.ObjectStatus({
+		text :"Error",
+		icon:"sap-icon://error",
+		state:sap.ui.core.ValueState.Error
+
+	    });	
+		var message=new sap.m.Text({"text":"Sample"});
+		var parentFlexBox=new sap.m.FlexBox({"width":"100%","direction":sap.m.FlexDirection.Row,
+		"alignItems":sap.m.FlexAlignItems.Center,
+		"justifyContent":sap.m.FlexJustifyContent.Center}); 	
+		var leftFlexBox=new sap.m.FlexBox({"width":"20%","direction":sap.m.FlexDirection.Row,
+		"alignItems":sap.m.FlexAlignItems.Center,
+		"justifyContent":sap.m.FlexJustifyContent.Center}); 
+		var rightFlexBox=new sap.m.FlexBox({"width":"80%","direction":sap.m.FlexDirection.Row,
+		"alignItems":sap.m.FlexAlignItems.Center,
+		"justifyContent":sap.m.FlexJustifyContent.Center}); 
+		rightFlexBox.addItem(oList);
+		leftFlexBox.addItem(oStatus);
+		//leftFlexBox.addItem(message);
+		parentFlexBox.addItem(leftFlexBox);
+		parentFlexBox.addItem(rightFlexBox);
+		parentFlexBox.placeAt("body");
+
+		</script>
+
+</head>
+<body id="body" class="sapUiBody">
+</body>
+</html>
+<!-- user:diana.mihaylova@sap.com --><!-- description:One item in a sap.m.List -->
+<!-- user:Sameer --><!-- description:Flex layout -->

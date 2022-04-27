@@ -1,0 +1,49 @@
+
+ <!DOCTYPE HTML>
+ <html>
+ <head>
+ <meta http-equiv = "X-UA-Compatible" content = "IE=edge"/>
+	 <meta http-equiv = 'Content-Type' content = 'text/html;charset=UTF-8'/>
+
+	 <title > Select </title>
+
+	 <script src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js"
+	id = "sap-ui-bootstrap" data-sap-ui-libs="sap.m,sap.uxap,sap.ui.table,sap.ui.core,sap.ui.commons" data-sap-ui-theme="sap_bluecrystal" > 
+	</script>
+
+	 <script type = "text/javascript">
+
+	const select = new sap.m.Select();
+	const scripts = [{"id":"EN","lang":"English"},{"id":"FR","lang":"French"},{"id":"GR","lang":"German"}];
+	const items = scripts.map((script)=> new sap.ui.core.Item({"key":script.id ,"text": script.lang }) );	
+	items.forEach((item) => select.addItem(item));
+    var model = new sap.ui.model.json.JSONModel();	
+	model.setData(scripts);
+	select.attachChange((evt)=>{
+		console.log(evt)
+	});
+    select.placeAt('body');
+	let count = 0;
+
+	// setInterval(()=>{
+	// 	const script = scripts[count % scripts.length];
+	// 	select.setSelectedKey(script.id);
+	// 	++count;
+	// 	console.log(`selecting key ${script.id}`);
+	// },3000);
+
+	setInterval(()=>{
+		const item = items[count % items.length];
+		select.setSelectedKey(item);
+		++count;
+		console.log(`selecting key ${item.getKey()}`);
+		select.fireChange({"selectedItem":item});
+	},3000);
+
+ </script>
+
+ </head>
+ <body id = "body" class = "sapUiBody" ></body>
+	 
+</html>
+	 

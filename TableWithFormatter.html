@@ -1,0 +1,108 @@
+
+ <!DOCTYPE HTML>
+ <html>
+ <head>
+ <meta http-equiv = "X-UA-Compatible" content = "IE=edge"/>
+	 <meta http-equiv = 'Content-Type' content = 'text/html;charset=UTF-8'/>
+
+	 <title > sap m table </title>
+
+	 <script src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js"
+	id = "sap-ui-bootstrap" data-sap-ui-libs="sap.m,sap.uxap" data-sap-ui-theme="sap_bluecrystal" > 
+	</script>
+
+	 <script type = "text/javascript">
+const searchBox = new sap.m.Input();
+const oTable = new sap.m.Table("tableID", {
+		columns: [
+			new sap.m.Column({
+				header: new sap.m.Label({
+					text: "ProductID"
+				})
+			}),
+			new sap.m.Column({
+				header: new sap.m.Label({
+					text: "ProductName"
+				})
+			}),
+			new sap.m.Column({
+				header: new sap.m.Label({
+					text: "UnitPrice"
+				})
+			})
+
+		]
+	});
+    const productNameColumn = new sap.m.Text({	});
+    productNameColumn.bindProperty("text", {
+        parts : [ {
+            path : "test>ProductID"
+        }, {
+            path : "test>ProductName"
+        } ],
+
+        formatter: function(productID, productName){     
+            return `${productID}    ${productName}`;
+        }
+    });        
+    const oTemplate = new sap.m.ColumnListItem({
+		cells: [
+			new sap.m.Text({
+				text: "{test>ProductID}"
+			}),
+			productNameColumn,
+			new sap.m.Text({
+				text: "{test>UnitPrice}"
+			})
+		],
+		type: "Navigation"
+	});
+
+ 
+
+const products = [
+    {
+      "ProductID": 1,
+      "ProductName": "Chai",
+      "UnitPrice": "18.0000"
+    },
+    {
+      "ProductID": 2,
+      "ProductName": "Chang",
+      "UnitPrice": "19.0000"
+    },
+    {
+      "ProductID": 3,
+      "ProductName": "Aniseed Syrup",
+      "UnitPrice": "10.0000"
+    },
+    {
+      "ProductID": 4,
+      "ProductName": "Chef Anton's Cajun Seasoning",
+      "UnitPrice": "22.0000"
+    },
+    {
+      "ProductID": 5,
+      "ProductName": "Chef Anton's Gumbo Mix",
+      "UnitPrice": "21.3500"
+    }
+  ];
+const model = new sap.ui.model.json.JSONModel();
+model.setData(products);
+oTable.setModel(model, "test");
+oTable.bindAggregation("items", "test>/", oTemplate);
+
+oTable.addEventDelegate({
+    onAfterRendering: function(){ 
+        console.log("rendering called for the table");
+}});	 
+
+oTable.placeAt("body");
+
+ </script>
+
+ </head>
+ <body id = "body" class = "sapUiBody" ></body>
+	 
+</html>
+	 

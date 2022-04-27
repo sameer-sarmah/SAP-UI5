@@ -1,0 +1,14 @@
+npm init
+create webapp folder
+ui5 init
+npm install
+
+when index.html has src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js"
+ui5 serve -o index.html
+
+
+when index.html has src="resources/sap-ui-core.js"
+npm run build
+ui5 serve
+
+The SAP UI5 dependencies are moved from package.json to ui5.yaml

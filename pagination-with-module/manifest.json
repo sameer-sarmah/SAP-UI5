@@ -1,0 +1,29 @@
+{
+	"sap.app": {
+		"id": "Product",
+		"applicationVersion": {
+			"version": "1.0.0"
+		}
+	},
+	"sap.ui5": {
+		"rootView": {
+			"viewName": "Product.view.Product",
+			"type": "XML",
+			"async": true
+		},
+		"dependencies": {
+			"libs": {
+				"sap.ui.layout": {}
+			}
+		},
+		"config": {
+			"sample": {
+				"files": [
+					"view/Product.view.xml",
+					"controller/Product.controller.js",
+					"manifest.json"
+				]
+			}
+		}
+	}
+}

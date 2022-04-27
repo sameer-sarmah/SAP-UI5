@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>Input Test</title>
+
+<script src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js"  type="text/javascript"
+	id="sap-ui-bootstrap" data-sap-ui-libs="sap.m" data-sap-ui-theme="sap_mvi">
+</script>
+
+<script>	
+	var oStatus = new sap.m.ObjectStatus({
+		text :"Error",
+		icon:"sap-icon://error",
+		state:sap.ui.core.ValueState.Error
+
+	});
+	var leftFlexBox=new sap.m.FlexBox({"width":"20%","direction":sap.m.FlexDirection.Row,
+		"alignItems":sap.m.FlexAlignItems.Center,
+		"justifyContent":sap.m.FlexJustifyContent.Center});
+	leftFlexBox.addItem(oStatus);
+	leftFlexBox.placeAt("body");
+	
+	
+</script>
+</head>
+<body id="body" class="sapUiBody">
+	<div id="txt">
+			
+		</div>
+		<br>
+		<div id="st">
+			
+		</div>
+</body>
+</html>
+<!-- user:Cahit --><!-- description:Number Formatter -->
+<!-- user:gery --><!-- description:ObjectStatus and TExt with number formatter -->

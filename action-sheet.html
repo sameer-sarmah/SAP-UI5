@@ -1,0 +1,40 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta http-equiv='Content-Type' content='text/html;charset=UTF-8'/>
+		
+		<title>Action sheet</title>
+		
+		<script src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js" 
+			id="sap-ui-bootstrap"
+			data-sap-ui-libs="sap.m" 
+			data-sap-ui-theme="sap_belize"></script>
+			<!-- only load the mobile lib "sap.m" and the Blue Crystal theme -->
+		
+		<script type="text/javascript">
+
+		
+		const connect  = new sap.m.Button({icon:"sap-icon://connected",text:"connect"});
+		connect.setTooltip("connect");
+		//connect.addAggregation("tooltip",connectToolTip);
+		const disconnect = new sap.m.Button({icon:"sap-icon://disconnected",text:"disconnect",tooltip:"disconnect"});
+		const deleteButton = new sap.m.Button({icon:"sap-icon://delete",text:"delete",tooltip:"delete"});
+		const buttons = [connect,disconnect,deleteButton];
+        const actions = new sap.m.ActionSheet({
+	    title : "Choose Your Document",
+		showCancelButton : true,
+		buttons:buttons});
+		//  actions.addButton(connect);
+		//  actions.addButton(disconnect);
+		//  actions.addButton(deleteButton);
+		actions.placeAt("body");
+		</script>
+
+</head>
+<body id="body" class="sapUiBody">
+</body>
+</html>
+<!-- user:diana.mihaylova@sap.com --><!-- description:One item in a sap.m.List -->
+<!-- user:Sameer --><!-- description:Flex layout -->

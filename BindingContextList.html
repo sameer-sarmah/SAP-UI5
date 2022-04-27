@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta charset="utf-8">
+		
+		<title>Mobile App with data-bound List</title>
+		
+		<script src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js" 
+			id="sap-ui-bootstrap"
+			data-sap-ui-libs="sap.m" 
+			data-sap-ui-theme="sap_bluecrystal"
+			data-sap-ui-xx-bindingSyntax='complex'></script>
+			<!-- only load the mobile lib "sap.m" and the "sap_bluecrystal" theme -->
+		
+		
+		<script>
+			
+			// create the data
+			
+			// create some dummy JSON data
+			var data = {
+				names: [
+					{firstName: "Peter", lastName: "Mueller"},
+					{firstName: "Petra", lastName: "Maier"},
+					{firstName: "Thomas", lastName: "Smith"},
+					{firstName: "John", lastName: "Williams"},
+					{firstName: "Maria", lastName: "Jones"}
+				]
+			};
+			
+			// create a Model with this data
+			var model = new sap.ui.model.json.JSONModel();
+			model.setData(data);
+			
+			
+			// create the UI
+			
+			// create a List control
+			var list = new sap.m.List({
+				headerText:"Names"
+			});
+			
+			// bind the List items to the data collection
+			list.bindItems({
+				path : "/names", 
+				template : new sap.m.StandardListItem({
+					title: "{lastName}",
+					description: "{firstName}"
+				})
+			});
+			
+			// set the model to the List, so it knows which data to use
+			list.setModel(model);
+			
+			// create the page holding the List
+			var page = new sap.m.Page({
+				title: "List Page",
+				content : list
+			});
+			
+			// create a mobile App holding the page and place the App into the HTML document
+			var app = new sap.m.App({
+				pages: [page]
+			}).placeAt("content");
+			
+			
+			alert("context path: " + list.getItems()[0].getBindingContext() +
+				  ",\nbinding: " + list.getItems()[0].getBinding("title").getPath());
+			
+		</script>
+		
+	</head>
+	<body id="content" class="sapUiBody">
+	</body>
+</html>

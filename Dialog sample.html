@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta charset="utf-8">
+		
+		<title>Just a Button</title>
+		
+		<script src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js"
+			id="sap-ui-bootstrap"
+			data-sap-ui-libs="sap.m,sap.ui.comp,sap.ui.layout" 
+			data-sap-ui-theme="sap_bluecrystal"></script>
+			<!-- only load the main library "sap.m" and the Blue Crystal theme -->
+		
+		<script>
+			var oModel = new sap.ui.model.json.JSONModel({
+					items: ["ALP", "Team", "Rocks"]
+			});
+			
+			var template = new sap.m.CustomListItem({
+				content: new sap.m.Label({text: "{}"})
+			});
+			
+			var list = new sap.m.List({
+				items: {
+					path: "/items",
+					template: template
+				},
+				mode: "MultiSelect"
+			});
+			list.setModel(oModel);
+			
+			
+			var oBtn = new sap.m.Button({
+				text: 'click me',
+				press: function() {
+					onDialogPress();
+				}
+			
+			});
+			
+			
+			var onDialogPress = function (oEvent) {
+				var that = this;
+				if (!that.pressDialog) {
+					that.pressDialog = new sap.m.Dialog({
+							title: 'List of products',
+							content: list,
+							beginButton: new sap.m.Button({
+								text: 'Close',
+								press: function () {
+									that.pressDialog.close();
+								}
+							})
+						});
+
+				}
+ 
+				that.pressDialog.open();
+			};
+			
+			oBtn.placeAt('content');
+			
+			
+		</script>
+		
+	</head>
+	<body id="content" class="sapUiBody">
+	</body>
+</html>
+<!-- user:Mihaly Ducz --><!-- description:sap.ui.comp.valuehelpdialog.ValueHelpDialog - Multi select without define condition -->
+<!-- user:Todor Nikolov --><!-- description:Dialog with List inside. -->

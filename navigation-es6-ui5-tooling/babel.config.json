@@ -1,0 +1,11 @@
+{
+    "plugins": [
+      ["@babel/plugin-transform-for-of", { "assumeArray": true }],
+      ["@babel/plugin-transform-computed-properties", { "loose": true }],
+      ["@babel/plugin-transform-destructuring", { "loose": true }]
+    ],
+    "presets": [
+        "transform-ui5",
+        "@babel/preset-typescript"
+    ]
+  }

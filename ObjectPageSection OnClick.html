@@ -1,0 +1,74 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta charset="utf-8">
+		
+		<title>Just a Button</title>
+		
+		<script src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js" 
+			id="sap-ui-bootstrap"
+			data-sap-ui-libs="sap.m, sap.uxap" 
+			data-sap-ui-theme="sap_bluecrystal"></script>
+			<!-- only load the main library "sap.m" and the Blue Crystal theme -->
+		
+		<script>
+			var section=new sap.uxap.ObjectPageSection({
+						title: "section",
+						subSections: [
+							new sap.uxap.ObjectPageSubSection({
+								title:"subsection",
+								blocks: [
+									new sap.m.Button({ text: 'some text' }),
+									new sap.m.Button({ text: 'some text' }),
+									new sap.m.Button({ text: 'some text' }),
+									new sap.m.Button({ text: 'some text' })
+					
+								]
+							})
+						]
+					});
+			var but=new sap.m.Button();
+            but.setText("AAA");
+            but.attachEvent("press",function(evt){console.log(evt);});
+			//but.attachEvent("tap",function(evt){console.log(evt);});
+            section.setCustomAnchorBarButton(but);
+			
+			var section2=new sap.uxap.ObjectPageSection({
+						title: "section 2",
+						subSections: [
+							new sap.uxap.ObjectPageSubSection({
+								title:"subsection 2",
+								blocks: [
+									new sap.m.Button({ text: 'some text' }),
+									new sap.m.Button({ text: 'some text' }),
+									new sap.m.Button({ text: 'some text' }),
+									new sap.m.Button({ text: 'some text' })
+								]
+							})
+								]
+					});
+			section2.setTitle("BBB");
+			var but2=new sap.m.Button();
+            but2.setText(section2.getTitle());
+            but2.attachEvent("press",function(evt){console.log(evt);});
+			//but.attachEvent("tap",function(evt){console.log(evt);});
+            section2.setCustomAnchorBarButton(but2);
+		var btn = new sap.uxap.ObjectPageLayout({
+				headerTitle: new sap.uxap.ObjectPageHeader({
+					objectTitle: "Object"
+				}),
+				sections: [section
+					,section2
+				
+						]
+					});
+			btn.placeAt('content');
+		</script>
+		
+	</head>
+	<body id="content" class="sapUiBody">
+	</body>
+</html>
+<!-- user:Jens Henniger --><!-- description:Object Page with two Subsections -->
+<!-- user:Sameer --><!-- description:ObjectPageSection press event -->

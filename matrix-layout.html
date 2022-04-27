@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html><head>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge' />
+	<meta http-equiv='Content-Type' content='text/html;charset=UTF-8'/>
+	<title>test</title>
+
+	<script id='sap-ui-bootstrap' type='text/javascript'
+		src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js" 
+		data-sap-ui-theme='sap_goldreflection'
+		data-sap-ui-libs='sap.ui.commons,sap.ui.ux3'></script>
+
+	<script>
+		// create a simple matrix layout
+		var oLayout = new sap.ui.commons.layout.MatrixLayout({
+			id : "matrix1",
+			layoutFixed : false
+			});
+
+
+		oLayout.setWidth("300px");
+		var LayoutCell1 = new sap.ui.commons.layout.MatrixLayoutCell({
+			content: [ new sap.ui.commons.Label({text:"Content A"}) ],
+            hAlign: sap.ui.commons.layout.HAlign.Left,
+			width: "50%"
+        });
+		var LayoutCell2 = new sap.ui.commons.layout.MatrixLayoutCell({
+			content: [new sap.ui.commons.Label({text:"Content B"})],
+            hAlign: sap.ui.commons.layout.HAlign.Right,
+			width: "50%"
+        });
+		oLayout.createRow(LayoutCell1,LayoutCell2);
+		
+		
+		
+		// attach it to some element in the page
+		oLayout.placeAt("content");
+		
+	</script>
+
+</head>
+<body class='sapUiBody'>
+	<div id='content'></div>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<html>
+	<head>
+		<meta http-equiv='X-UA-Compatible' content='IE=edge'>
+		<meta charset="utf-8">
+
+		<title>getBindingContext on named models</title>
+
+		<script id='sap-ui-bootstrap'
+				src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js" 
+				data-sap-ui-theme='sap_belize'
+				data-sap-ui-libs='sap.m'
+				data-sap-ui-xx-bindingSyntax='complex'></script>
+
+
+		<!-- define a new (simple) XML view
+		 - using data binding for the Button text
+		 - binding a controller method to the Button's "press" event
+		 note: typically this would be a standalone file -->
+
+		<script id="myXml" type="text/xmldata">
+			<mvc:View xmlns:mvc="sap.ui.core.mvc" 
+			xmlns="sap.m" 
+			controllerName="myController" 
+			displayBlock="true">
+				<Button id="button1"  text="{a>/data/text}"/>
+			</mvc:View>
+		</script>
+
+		<script>
+			sap.ui.controller("myController", {
+				onInit: function() {
+					var model = new sap.ui.model.json.JSONModel({
+							data: {
+								text: "Click me"
+							}
+					});
+					this.getView().setModel(model,"a");
+					var context = new sap.ui.model.Context(model,"/");
+					this.getView().setBindingContext(context);
+				},
+				onAfterRendering : function(event){
+				 console.log("onAfterRendering");
+				 const btn1 = this.getView().byId("button1");
+				 console.log(btn1.getBindingContext());
+				},
+				onBeforeRendering : function(event){
+				 console.log("onBeforeRendering");
+				},
+				showContext: function(oEvent) {
+					alert(oEvent.getSource().getParent().getBindingContext("a"));
+				}
+			});
+			sap.ui.xmlview({ viewContent: jQuery('#myXml').html() }).placeAt("content");
+		</script>
+
+	</head>
+	<body id='content' class='sapUiBody'>
+	</body>
+</html>

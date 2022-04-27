@@ -1,0 +1,73 @@
+
+ <!DOCTYPE HTML>
+ <html>
+ <head>
+ <meta http-equiv = "X-UA-Compatible" content = "IE=edge"/>
+	 <meta http-equiv = 'Content-Type' content = 'text/html;charset=UTF-8'/>
+
+	 <title > sap ui table </title>
+
+	 <script src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js"
+	id = "sap-ui-bootstrap" data-sap-ui-libs="sap.m,sap.uxap,sap.ui.table,sap.ui.core,sap.viz" data-sap-ui-theme="sap_bluecrystal" > 
+	</script>
+
+	 <script type = "text/javascript">
+
+var oModel = new sap.ui.model.json.JSONModel();
+var data = {
+"Cars" : [
+{"Model": "Alto","Value": "758620"},
+{"Model": "Zen","Value": "431160"},
+{"Model": "Santro","Value": "515100"},
+{"Model": "Matiz","Value": "293780"},
+{"Model": "Wagan R","Value": "974010"},
+]};
+oModel.setData(data);
+
+var oDataset = new sap.viz.ui5.data.FlattenedDataset({
+dimensions : [{
+name : 'Model',
+value : "{Model}"}],
+
+measures : [{
+name : "Cars Bought",
+value : "{Value}"} ],
+
+data : {
+path : "/Cars"
+}
+});
+const oVizFrame = new sap.viz.ui5.controls.VizFrame({
+	            width: '100%',
+	            height: '350px',
+	            vizType: 'stacked_column',
+	            vizScales: [{
+	            	feed: 'color',
+	            	palette: ['#E07D83', '#CCC95E', '#98BC7A', '#7FA5B2', '#86BFBA', '#E5BA76' ]
+	            }]
+				});
+
+oVizFrame.setDataset(oDataset);
+oVizFrame.setModel(oModel);
+var feedValueAxis = new sap.viz.ui5.controls.common.feeds.FeedItem({
+'uid': "valueAxis",
+'type': "Measure",
+'values': ["Cars Bought"]
+}),
+feedCategoryAxis = new sap.viz.ui5.controls.common.feeds.FeedItem({
+'uid': "categoryAxis",
+'type': "Dimension",
+'values': ["Model"]
+});
+oVizFrame.addFeed(feedValueAxis);
+oVizFrame.addFeed(feedCategoryAxis);
+	 
+oVizFrame.placeAt("body");
+
+ </script>
+
+ </head>
+ <body id = "body" class = "sapUiBody" ></body>
+	 
+</html>
+	 

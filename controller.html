@@ -66,7 +66,10 @@
 		//	var oSelectedSectionInfo=this.page._oSectionInfo[this.section2.getId()];
 		//	oAnchorBar.setSelectedButton(oSelectedSectionInfo.buttonId);
 		//	sap.uxap.ObjectPageLayout.HEADER_CALC_DELAY = 0
-			this.page.setSelectedSection(this.section2.getId());		
+			this.page.setSelectedSection(this.section2.getId());	
+			this.page.attachSectionChange({},(event)=>{
+					console.log(event);
+			})	
 			jQuery.sap.log.error("onInit completed");
 			},
 			onAfterRendering:function(){

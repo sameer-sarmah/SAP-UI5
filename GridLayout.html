@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html><head>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge' />
+	<meta http-equiv='Content-Type' content='text/html;charset=UTF-8'/>
+	<title>test</title>
+
+	<script id='sap-ui-bootstrap' type='text/javascript'
+		src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js" 
+		data-sap-ui-theme='sap_goldreflection'
+		data-sap-ui-libs='sap.ui.layout,sap.m'></script>
+
+<script>
+		const product = {
+		  "ProductID": 1,
+		  "ProductName": "Chai",
+		  "SupplierID": 1,
+		  "CategoryID": 1,
+		  "QuantityPerUnit": "10 boxes x 20 bags",
+		  "UnitPrice": "18.0000",
+		  "UnitsInStock": 39,
+		  "UnitsOnOrder": 0,
+		  "ReorderLevel": 10,
+		  "Discontinued": false
+		};
+      const productIdText = new sap.m.Text({
+        text: "{/ProductID}"
+      });
+      const productNameText = new sap.m.Text({
+        text: "{/ProductName}"
+
+      });
+      const quantityPerUnitText = new sap.m.Text({
+        text: "{/QuantityPerUnit}"
+      });
+      const unitPriceText = new sap.m.Text({
+        text: "{/UnitPrice}"
+      }); 
+      
+	  const oModel = new sap.ui.model.json.JSONModel(product);
+	  const grid = new sap.ui.layout.Grid({
+        defaultSpan: "XL2 L2 M2 S2",
+        content: [
+          productIdText,productNameText,
+          quantityPerUnitText,unitPriceText
+        ]
+      });
+	  grid.setModel(oModel);
+	  grid.placeAt("content");
+	  
+		</script>
+
+</head>
+<body class='sapUiBody'>
+	<div id='content'></div>
+</body>
+</html>

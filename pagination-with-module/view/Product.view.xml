@@ -1,0 +1,6 @@
+<mvc:View
+	controllerName="Product.controller.Product"
+	xmlns:l="sap.ui.layout"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m">
+</mvc:View>

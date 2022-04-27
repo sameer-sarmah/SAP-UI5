@@ -1,0 +1,145 @@
+<html>
+	<head>
+		<meta http-equiv='X-UA-Compatible' content='IE=edge'>
+		<meta charset="utf-8">
+
+		<title>getBindingContext on named models</title>
+
+		<script id='sap-ui-bootstrap'
+				src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js" 
+				data-sap-ui-theme='sap_belize'
+				data-sap-ui-libs='sap.m'
+				data-sap-ui-xx-bindingSyntax='complex'></script>
+
+
+		<script id="myXml" type="text/xmldata">
+			<mvc:View xmlns:mvc="sap.ui.core.mvc" 
+			xmlns="sap.m" 
+			controllerName="myController" 
+			displayBlock="true">
+					<Panel headerText="{i18n>panel3HeaderText}" class="sapUiResponsiveMargin" width="auto">
+		<content>
+			<List headerText="Products" items="{products>/Products}">
+				<items>
+					<ObjectListItem
+						press=".onItemSelected"
+						type="Active"
+						title="{products>ProductName}"
+									number="{ parts: [{path: 'products>UnitPrice'}, {path: '/currencyCode'}],
+												type: 'sap.ui.model.type.Currency',
+												formatOptions: { showMeasure: false }
+											}"
+									numberUnit="{/currencyCode}">
+					</ObjectListItem>
+				</items>
+			</List>
+		</content>
+	</Panel>
+	<Panel id="productDetailsPanel" headerText="{i18n>panel4HeaderText}" class="sapUiResponsiveMargin" width="auto">
+	<content>
+			<Label text="ProductID:"/>
+			<Input value="{products>ProductID}"/>
+
+			<Label text="ProductName:"/>
+			<Input value="{products>ProductName}"/>
+
+			<Label text="QuantityPerUnit:"/>
+			<Input value="{products>QuantityPerUnit}"/>
+
+			<Label text="UnitPrice:"/>
+			<Input value="{products>UnitPrice}"/>
+
+			<Label text="UnitsInStock:"/>
+			<Input value="{products>UnitsInStock}"/>
+		</content>
+	</Panel>
+			</mvc:View>
+		</script>
+
+		<script>
+			const products = { "Products": [ {
+     "ProductID": 1,
+     "ProductName": "Chai",
+     "SupplierID": 1,
+     "CategoryID": 1,
+     "QuantityPerUnit": "10 boxes x 20 bags",
+     "UnitPrice": "18.0000",
+     "UnitsInStock": 39,
+     "UnitsOnOrder": 0,
+     "ReorderLevel": 10,
+     "Discontinued": false
+    }, {
+     "ProductID": 2,
+     "ProductName": "Chang",
+     "SupplierID": 1,
+     "CategoryID": 1,
+     "QuantityPerUnit": "24 - 12 oz bottles",
+     "UnitPrice": "19.0000",
+     "UnitsInStock": 17,
+     "UnitsOnOrder": 40,
+     "ReorderLevel": 25,
+     "Discontinued": false
+    }, {
+     "ProductID": 3,
+     "ProductName": "Aniseed Syrup",
+     "SupplierID": 1,
+     "CategoryID": 2,
+     "QuantityPerUnit": "12 - 550 ml bottles",
+     "UnitPrice": "10.0000",
+     "UnitsInStock": 13,
+     "UnitsOnOrder": 70,
+     "ReorderLevel": 25,
+     "Discontinued": false
+    }, {
+     "ProductID": 4,
+     "ProductName": "Chef Anton's Cajun Seasoning",
+     "SupplierID": 2,
+     "CategoryID": 2,
+     "QuantityPerUnit": "48 - 6 oz jars",
+     "UnitPrice": "22.0000",
+     "UnitsInStock": 53,
+     "UnitsOnOrder": 0,
+     "ReorderLevel": 0,
+     "Discontinued": false
+    }, {
+     "ProductID": 5,
+     "ProductName": "Chef Anton's Gumbo Mix",
+     "SupplierID": 2,
+     "CategoryID": 2,
+     "QuantityPerUnit": "36 boxes",
+     "UnitPrice": "21.3500",
+     "UnitsInStock": 0,
+     "UnitsOnOrder": 0,
+     "ReorderLevel": 0,
+     "Discontinued": true
+    }]
+  }
+;
+			sap.ui.controller("myController", {
+				onInit: function() {
+					var model = new sap.ui.model.json.JSONModel(products);
+					this.getView().setModel(model,"products");
+					//var context = new sap.ui.model.Context(model,"/");
+					//this.getView().setBindingContext(context);
+				},
+				onAfterRendering : function(event){
+				 console.log("onAfterRendering");
+				},
+				onBeforeRendering : function(event){
+				 console.log("onBeforeRendering");
+				},
+				onItemSelected: function(oEvent) {
+					var oSelectedItem = oEvent.getSource();
+					var oContext = oSelectedItem.getBindingContext("products");
+					var sPath = oContext.getPath();
+					var oProductDetailPanel = this.getView().byId("productDetailsPanel");
+					oProductDetailPanel.bindElement({ path: sPath, model: "products" });
+				}
+			});
+			sap.ui.xmlview({ viewContent: jQuery('#myXml').html() }).placeAt("content");
+		</script>
+
+	</head>
+	<body id='content' class='sapUiBody'>
+	</body>
+</html>

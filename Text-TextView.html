@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html><head>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge' />
+	<meta http-equiv='Content-Type' content='text/html;charset=UTF-8'/>
+	<title>test</title>
+	<style>
+	.sapUiTableCol .sapUiLbl, .sapUiTableCell>.sapUiTf, .sapUiTableCell>.sapUiSearchField, .sapUiTableCell>.sapUiSearchField>.sapUiTfCombo, .sapUiTableCell>.sapUiTfCombo {
+		 border: 1px solid #bfbfbf !important;
+		background: none;
+		padding: 0;
+		margin: 0;
+		width: 100%;
+	}
+	</style>
+
+	<script id='sap-ui-bootstrap' type='text/javascript'
+		src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js" 
+		data-sap-ui-theme='sap_goldreflection'
+		data-sap-ui-libs='sap.ui.commons,sap.ui.ux3, sap.ui.table,sap.m'></script>
+		<!-- add 'sap.ui.table' and/or other librars if required -->
+
+	<script>	
+		//Define some sample data
+	
+
+var oData = {
+  text: "In the most simple case, a tooltip is a string that will be rendered by the control and displayed by the browser when the mousepointer hovers over the control's DOM. In this variant, tooltip behaves like a simple control property. Controls need to explicitly support this kind of tooltip as they have to render it, but most controls do. Exceptions will be documented for the corresponding controls (e.g. sap.ui.core.HTML does not support tooltips)."
+
+}
+var oModel = new sap.ui.model.json.JSONModel(oData);
+
+
+var oTextView = new sap.ui.commons.TextView({
+	text : "{/text}",
+
+	});
+
+	oTextView.setModel(oModel);
+		
+var text = new sap.m.Text({
+	text : "{/text}",
+
+	});
+
+	text.setModel(oModel);
+			var parentFlexBox=new sap.m.FlexBox({"width":"100%","direction":sap.m.FlexDirection.Column,
+		"alignItems":sap.m.FlexAlignItems.Center,
+		"justifyContent":sap.m.FlexJustifyContent.Center}); 	
+		var topFlexBox=new sap.m.FlexBox({"direction":sap.m.FlexDirection.Row,
+		"alignItems":sap.m.FlexAlignItems.Center,
+		"justifyContent":sap.m.FlexJustifyContent.Center}); 
+		var bottomFlexBox=new sap.m.FlexBox({"direction":sap.m.FlexDirection.Row,
+		"alignItems":sap.m.FlexAlignItems.Center,
+		"justifyContent":sap.m.FlexJustifyContent.Center}); 
+		
+		topFlexBox.addItem(oTextView);
+		bottomFlexBox.addItem(text);
+		parentFlexBox.addItem(topFlexBox);
+		parentFlexBox.addItem(bottomFlexBox);
+		parentFlexBox.placeAt("content");	
+		
+	</script>
+
+</head>
+<body class='sapUiBody'>
+	<div id='content'></div>
+</body>
+</html>

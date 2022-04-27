@@ -1,0 +1,87 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta charset="utf-8">
+		
+		<title>Just a Button</title>
+		
+		<script src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js" 
+			id="sap-ui-bootstrap"
+			data-sap-ui-libs="sap.m, sap.uxap" 
+			data-sap-ui-theme="sap_bluecrystal"></script>
+			<!-- only load the main library "sap.m" and the Blue Crystal theme -->
+		
+		<script>
+
+	
+	
+	var detailErrorTable = new sap.m.Table({
+		growing : true,
+		showSeparators : sap.m.ListSeparators.Inner,
+		inset : false,
+		fixedLayout : false,
+		backgroundDesign : sap.m.BackgroundDesign.Transparent,
+		columns : [ new sap.m.Column({
+			header : new sap.m.Text({
+				text : "Type"
+			})
+		}), new sap.m.Column({
+			header : new sap.m.Text({
+				text : "Name"
+			})
+		}) ]
+	});
+	
+	var errorTemplate = new sap.m.ColumnListItem({
+		unread : false,
+		vAlign : "Top",
+		cells : [ new sap.m.Text({
+				maxLines : 3,
+				text : "{Type}"
+			}), new sap.m.Text({
+				maxLines : 3,
+				text : "{Title}"
+			}) ]
+	});
+	var that=this;
+	
+
+	
+	var detailErrorPage = new sap.m.Page({
+		showNavButton : true,
+		enableScrolling: true,
+		content : [ detailErrorTable ],
+		navButtonPress : function() {
+			that.errorDialog.setContentHeight("8.5rem");
+			that.errorMessagesNavigationContainer.back();
+		}
+		
+	});
+	
+	var navigation = [ {
+			name : "Internal server error",
+			icon : "sap-icon://error",
+			state : sap.ui.core.ValueState.Error
+		} ];
+		
+	var mainErrorModel = new sap.ui.model.json.JSONModel();
+		mainErrorModel.setData({
+			navigation : navigation
+		});
+	detailErrorPage.setTitle("Messages (3)");
+	var message=[{"Type":"403","Title":"Forbidden"},{"Type":"401","Title":"Unauthenticated"},{"Type":"500","Title":"Internal server error"}];
+	var detailsErrorModel = new sap.ui.model.json.JSONModel();
+	detailsErrorModel.setData({
+		errorMessageContentList : message
+	});
+	detailErrorPage.setModel(detailsErrorModel);
+	detailErrorTable.bindAggregation("items","/errorMessageContentList",errorTemplate);        //  errorTable.placeAt('content');
+	var app = new sap.m.App("tableApp", {initialPage:"detailErrorPage"});
+	detailErrorPage.placeAt('content');
+		</script>
+		
+	</head>
+	<body id="content" class="sapUiBody">
+	</body>
+</html>

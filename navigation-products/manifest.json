@@ -1,0 +1,91 @@
+{
+	"sap.app": {
+		"id": "sap.ui.demo",
+		"type": "application",
+		"i18n": "i18n/i18n.properties",
+		"applicationVersion": {
+			"version": "1.0.0"
+		},
+		"sourceTemplate": {
+			"id": "ui5template.basicSAPUI5ApplicationProject",
+			"version": "1.32.0"
+		},
+		"dataSources": {
+			"products": {
+				"uri": "./model/products.json",
+				"type": "JSON"
+			}
+		}
+	},
+	"sap.ui5": {
+		"rootView": {
+			"viewName": "sap.ui.demo.view.Product",
+			"type": "XML"
+		},
+		"dependencies": {
+			"minUI5Version": "1.30",
+			"libs": {
+				"sap.ui.core": {},
+				"sap.m": {},
+				"sap.ui.layout": {}
+			}
+		},
+		"config": {
+			"productsLocal": "/model/products.json"
+		},
+		"routing": {
+			"config": {
+				"routerClass": "sap.m.routing.Router",
+				"viewType": "XML",
+				"viewPath": "sap.ui.demo.view",
+				"controlId": "productApp",
+				"controlAggregation": "pages"
+			},
+			"routes": [
+				{
+					"pattern": "",
+					"name": "Product",
+					"view": "Product",
+					"controlAggregation": "pages"
+				},
+				{
+					"pattern": "ProductDetails/{productID}",
+					"name": "ProductDetails",
+					"target": "ProductDetails",
+					"controlAggregation": "pages"
+				}
+			],
+			"targets": {
+				"Product": {
+					"viewName": "Product"
+				},
+				"ProductDetails": {
+					"viewName": "ProductDetails"
+				}
+			}
+		},
+		"contentDensities": {
+			"compact": true,
+			"cozy": true
+		},
+		"models": {
+			"i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"settings": {
+					"bundleName": "sap.ui.demo.i18n.i18n"
+				}
+			},
+			"productsData": {
+				"type": "sap.ui.model.json.JSONModel",
+				"dataSource": "products"
+			}
+		},
+		"resources": {
+			"css": [
+				{
+					"uri": "css/style.css"
+				}
+			]
+		}
+	}
+}
