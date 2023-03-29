@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html><head>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge' />
+	<meta http-equiv='Content-Type' content='text/html;charset=UTF-8'/>
+	
+	<title>MVC with XmlView</title>
+	
+	<!-- Load UI5, select gold reflection theme and the "commons" control library -->
+	<script id='sap-ui-bootstrap' type='text/javascript'
+		src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js"
+		data-sap-ui-theme='sap_belize'
+		data-sap-ui-libs='sap.ui.commons'
+		data-sap-ui-xx-bindingSyntax="complex"></script>
+
+
+		<!-- Table definition -->
+	<script id="view1" type="sapui5/xmlview">	
+	<mvc:View
+		xmlns:mvc="sap.ui.core.mvc"
+		xmlns="sap.m"
+		xmlns:uxap="sap.uxap"
+		xmlns:f="sap.ui.layout.form"
+		controllerName="my.own.controller.form">
+		<App>
+			<Page>
+
+									<f:Form
+										title="Product Form"
+										id="productForm"
+										width="100%" 
+										editable="true">
+
+										<f:layout>
+
+											<f:ResponsiveGridLayout
+												singleContainerFullSize="false"
+
+												columnsM="1"
+												columnsL="1"
+												columnsXL="1" />
+										</f:layout>
+										
+									</f:Form>
+
+								</Page>
+			</App>
+		</mvc:View>
+	</script>
+	
+
+		
+	
+	<script>
+		sap.ui.controller("my.own.controller.form", {
+			
+			onInit:function(){
+			
+			const productForm = this.getView().byId("productForm");
+				
+				const product = {
+					  "ProductID": 1,
+					  "ProductName": "Chai",
+					  "SupplierID": 1,
+					  "CategoryID": 1,
+					  "QuantityPerUnit": "10 boxes x 20 bags",
+					  "UnitPrice": "18.0000",
+					  "UnitsInStock": 39,
+					  "UnitsOnOrder": 0,
+					  "ReorderLevel": 10,
+					  "Discontinued": false
+					};
+					
+				  
+
+				  const productIdText = new sap.m.Text({
+					text: "{/ProductID}"
+				  });
+				  
+				  const productIdFormElement = new sap.ui.layout.form.FormElement({
+						label: "ProductID",
+						fields:[productIdText]
+				  });
+				  
+
+				  const productNameText = new sap.m.Text({
+					text: "{/ProductName}"
+
+				  });
+				  
+				  const productNameFormElement = new sap.ui.layout.form.FormElement({
+						label: "ProductName",
+						fields:[productNameText]
+				  });
+				  
+				  const quantityPerUnitText = new sap.m.Text({
+					text: "{/QuantityPerUnit}"
+				  });
+				  
+				  const quantityPerUnitFormElement = new sap.ui.layout.form.FormElement({
+						label: "Quantity",
+						fields:[quantityPerUnitText]
+				  });
+				  
+				  const unitPriceText = new sap.m.Text({
+					text: "{/UnitPrice}"
+				  }); 
+				  
+				  const unitPriceFormElement = new sap.ui.layout.form.FormElement({
+						label: "Price",
+						fields:[unitPriceText]
+				  });
+				  				 
+				 const productFormContainer = new sap.ui.layout.form.FormContainer({
+						title:"Product container",
+						formElements:[productIdFormElement,productNameFormElement,quantityPerUnitFormElement,unitPriceFormElement]
+				  });
+				 productForm.addFormContainer(productFormContainer);
+				 const oModel = new sap.ui.model.json.JSONModel(product);
+				 this.getView().setModel(oModel);
+			console.log("onInit completed");
+			},
+			onAfterRendering:function(){
+				console.log("onAfterRendering");
+			},
+			onBeforeRendering:function(){
+			
+				console.log("onBeforeRendering");
+			}
+			
+		});
+		sap.ui.xmlview({viewContent:jQuery('#view1').html() }).placeAt('content');
+		//const productFormContainer = 
+
+		
+	</script>
+	
+	</head>
+	<body class='sapUiBody sapUiSizeCompact'>
+		<div id='content'></div>
+	</body>
+</html>
+
+<!-- user:tim --><!-- description:xml view with IconTabBar without icons -->
+<!-- user:Laszlo Szentmiklosy --><!-- description:form responsive grid layout -->

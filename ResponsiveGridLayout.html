@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html><head>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge' />
+	<meta http-equiv='Content-Type' content='text/html;charset=UTF-8'/>
+	<title>Grid layout with CheckBox</title>
+
+	<script id='sap-ui-bootstrap' type='text/javascript'
+		src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js" 
+		data-sap-ui-theme='sap_belize'
+		data-sap-ui-libs='sap.ui.layout,sap.m'></script>
+		<!-- add 'sap.ui.table' and/or other libraries if required -->
+
+	<script>
+		const product = {
+		  "ProductID": 1,
+		  "ProductName": "Chai",
+		  "SupplierID": 1,
+		  "CategoryID": 1,
+		  "QuantityPerUnit": "10 boxes x 20 bags",
+		  "UnitPrice": "18.0000",
+		  "UnitsInStock": 39,
+		  "UnitsOnOrder": 0,
+		  "ReorderLevel": 10,
+		  "Discontinued": false
+		};
+		
+	  
+	  
+	  const productIdLabel = new sap.m.Label({
+        text: "ProductID",
+		layoutData : new sap.ui.layout.GridData({
+        						span : "L6 M6 S6"
+        					})
+      });
+      const productIdText = new sap.m.Text({
+        text: "{/ProductID}",
+		layoutData : new sap.ui.layout.GridData({
+        						span : "L6 M6 S6"
+        					})
+      });
+      
+	 const productNameLabel = new sap.m.Label({
+        text: "ProductName",
+		layoutData : new sap.ui.layout.GridData({
+        						span : "L6 M6 S6"
+        					})
+      });
+	  const productNameText = new sap.m.Text({
+        text: "{/ProductName}",
+		layoutData : new sap.ui.layout.GridData({
+        						span : "L6 M6 S6"
+        					})
+
+      });
+      
+	  
+	  const quantityPerUnitLabel = new sap.m.Label({
+        text: "Quantity",
+		layoutData : new sap.ui.layout.GridData({
+        						span : "L6 M6 S6"
+        					})
+      });
+	  const quantityPerUnitText = new sap.m.Text({
+        text: "{/QuantityPerUnit}",
+		layoutData : new sap.ui.layout.GridData({
+        						span : "L6 M6 S6"
+        					})
+      });
+      
+	  const unitPriceLabel = new sap.m.Label({
+        text: "Price",
+		layoutData : new sap.ui.layout.GridData({
+        						span : "L6 M6 S6"
+        					})
+      });
+	  const unitPriceText = new sap.m.Text({
+        text: "{/UnitPrice}",
+		layoutData : new sap.ui.layout.GridData({
+        						span : "L6 M6 S6"
+        					})
+      }); 
+	  
+	  const oModel = new sap.ui.model.json.JSONModel(product);
+	  const form = new sap.ui.layout.form.SimpleForm({
+	  layout: "ResponsiveGridLayout",
+	          content: [
+          productIdLabel,productIdText,
+		  productNameLabel, productNameText,
+          quantityPerUnitLabel, quantityPerUnitText,
+		  unitPriceLabel, unitPriceText
+        ]
+	  })
+
+	  form.setModel(oModel);
+	  form.placeAt("content");
+
+            </script>
+
+
+</head>
+<body class='sapUiBody'>
+	<div id='content'></div>
+</body>
+</html>

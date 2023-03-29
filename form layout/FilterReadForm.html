@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html><head>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge' />
+	<meta http-equiv='Content-Type' content='text/html;charset=UTF-8'/>
+	
+	<title>Form layout</title>
+	
+	<!-- Load UI5, select gold reflection theme and the "commons" control library -->
+	<script id='sap-ui-bootstrap' type='text/javascript'
+		src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js"
+		data-sap-ui-theme='sap_belize'
+		data-sap-ui-libs='sap.ui.commons'
+		data-sap-ui-xx-bindingSyntax="complex"></script>
+
+
+		<!-- Table definition -->
+	<script id="view1" type="sapui5/xmlview">	
+	<mvc:View
+		xmlns:mvc="sap.ui.core.mvc"
+		xmlns="sap.m"
+		xmlns:uxap="sap.uxap"
+		xmlns:f="sap.ui.layout.form"
+		controllerName="my.own.controller.form">
+		<App>
+			<Page>
+
+									<f:Form
+										title="Filter"
+										id="productForm"
+										width="100%" 
+										editable="true">
+
+										<f:layout>
+
+											<f:ResponsiveGridLayout
+												singleContainerFullSize="false"
+												columnsM="1"
+												columnsL="1"
+												columnsXL="1" />
+										</f:layout>
+										
+									</f:Form>
+
+			</Page>
+		</App>
+	</mvc:View>
+	</script>
+	
+
+		
+	
+	<script type="text/javascript" src="./FilterReadForm.js">
+
+	</script>
+	
+	</head>
+	<body class='sapUiBody sapUiSizeCompact'>
+		<div id='content'></div>
+	</body>
+</html>
+
+<!-- user:tim --><!-- description:xml view with IconTabBar without icons -->
+<!-- user:Laszlo Szentmiklosy --><!-- description:form responsive grid layout -->
