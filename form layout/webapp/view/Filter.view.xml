@@ -1,0 +1,23 @@
+	<mvc:View
+		xmlns:mvc="sap.ui.core.mvc"
+		xmlns="sap.m"
+		xmlns:uxap="sap.uxap"
+		xmlns:f="sap.ui.layout.form"
+		controllerName="sap.ui.demo.controller.Filter">
+									<f:Form
+										title="Filter"
+										id="filterForm"
+										width="100%" 
+										editable="true">
+
+										<f:layout>
+
+											<f:ResponsiveGridLayout
+												singleContainerFullSize="false"
+												columnsM="1"
+												columnsL="1"
+												columnsXL="1" />
+										</f:layout>
+										
+									</f:Form>
+	</mvc:View>
