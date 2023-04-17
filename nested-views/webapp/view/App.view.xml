@@ -5,10 +5,8 @@
 	displayBlock="true">
 	<App class="myAppDemoWT">
 		<pages>
-			<Page title="{i18n>homePageTitle}">
+			<Page title="{i18n>homePageTitle}" id="appPage">
 				<content>
-					 <mvc:XMLView viewName="sap.ui.demo.view.HelloPanel"/> 
-					 <mvc:XMLView viewName="sap.ui.demo.view.Product"/> 
 					<Text
 				text="Hello {/recipient/name}"
 				class="sapUiSmallMargin sapThemeHighlight-asColor myCustomText"/>
